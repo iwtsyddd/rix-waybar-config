@@ -1,0 +1,127 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 38,
+  "spacing": 4,
+
+  "modules-left": ["custom/window"],
+  "modules-center": ["custom/nowplaying"],
+  "modules-right": [
+    "custom/cpu",
+    "custom/ram",
+    "custom/temp",
+    "pulseaudio",
+    "network",
+    "battery",
+    "tray",
+    "clock"
+  ],
+
+  "custom/window": {
+    "exec": "~/.config/waybar/scripts/window_wrapper.sh",
+    "interval": 1,
+    "return-type": "json",
+    "format": "{}",
+    "max-length": 50,
+    "tooltip": true
+  },
+
+  "custom/nowplaying": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/nowplaying.sh",
+    "interval": 3,
+    "return-type": "json",
+    "max-length": 60,
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+    "tooltip": true
+  },
+
+  "custom/cpu": {
+    "exec": "~/.config/waybar/scripts/cpu_usage.sh",
+    "interval": 5,
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true
+  },
+
+  "custom/ram": {
+    "exec": "~/.config/waybar/scripts/ram.sh",
+    "interval": 10,
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true
+  },
+
+  "custom/temp": {
+    "exec": "~/.config/waybar/scripts/cpu_temp.sh",
+    "interval": 10,
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰖁 {volume}%",
+    "format-icons": {
+      "default": ["󰕿", "󰖀", "󰕾"]
+    },
+    "on-click": "pavucontrol",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +2%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -2%",
+    "tooltip": true,
+    "tooltip-format": "Volume: {volume}%"
+  },
+
+  "network": {
+    "format-wifi": "󰤨 {essid}",
+    "format-ethernet": "󰈁 Connected",
+    "format-disconnected": "󰤭 Offline",
+    "tooltip-format": "Interface: {ifname}\nIP: {ipaddr}\nSignal: {signalStrength}%",
+    "on-click": "nm-connection-editor"
+  },
+
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰚥 {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "tooltip-format": "Time remaining: {time}\nPower: {power}W"
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8,
+    "show-passive-items": true
+  },
+
+  "clock": {
+    "format": "󰥔 {:%H:%M}",
+    "format-alt": "󰃭 {:%d.%m.%Y}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc94b'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  }
+}
